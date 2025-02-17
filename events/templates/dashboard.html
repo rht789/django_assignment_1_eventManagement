@@ -1,0 +1,107 @@
+{% load static %}
+<!-- dashboard.html - Dashboard Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Manager - Dashboard</title>
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+        <h1 class="text-lg font-bold">Event Manager</h1>
+        <div>
+            <a href="index.html" class="mx-3 text-gray-700">Home</a>
+            <a href="events.html" class="mx-3 text-gray-700">Events</a>
+            <a href="dashboard.html" class="mx-3 text-gray-700">Dashboard</a>
+            <a href="create.html" class="mx-3 text-gray-700">Create Event</a>
+        </div>
+    </nav>
+    
+    <!-- Dashboard Section -->
+    <section class="p-8">
+        <h3 class="text-2xl font-bold">Dashboard</h3>
+        
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                <i class="fa-solid fa-users text-teal-600 text-3xl mr-3"></i>
+                <div>
+                    <p class="text-gray-600">Total Participants</p>
+                    <p class="text-xl font-bold">10,000</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                <i class="fa-solid fa-calendar text-teal-600 text-3xl mr-3"></i>
+                <div>
+                    <p class="text-gray-600">Total Events</p>
+                    <p class="text-xl font-bold">50</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                <i class="fa-solid fa-chart-line text-teal-600 text-3xl mr-3"></i>
+                <div>
+                    <p class="text-gray-600">Upcoming Events</p>
+                    <p class="text-xl font-bold">20</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                <i class="fa-solid fa-clock text-teal-600 text-3xl mr-3"></i>
+                <div>
+                    <p class="text-gray-600">Past Events</p>
+                    <p class="text-xl font-bold">30</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Events by Category -->
+        <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+            <h4 class="text-lg font-bold">Events by Category</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Technology</h5>
+                    <p class="text-xl font-bold">12 Events</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Music</h5>
+                    <p class="text-xl font-bold">8 Events</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Business</h5>
+                    <p class="text-xl font-bold">10 Events</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Art</h5>
+                    <p class="text-xl font-bold">7 Events</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Culinary</h5>
+                    <p class="text-xl font-bold">5 Events</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">Sports</h5>
+                    <p class="text-xl font-bold">9 Events</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Today's Events -->
+        <div class="bg-white p-4 rounded-lg shadow-md mt-6">
+            <h4 class="text-lg font-bold">Today's Events</h4>
+            <ul class="mt-2">
+                <li class="py-2 border-b"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Morning Yoga - 08:00 AM</li>
+                <li class="py-2 border-b"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Tech Meetup - 02:00 PM</li>
+                <li class="py-2"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Evening Concert - 07:00 PM</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white text-center p-4 mt-8">
+        © 2025 Event Manager. All rights reserved.
+    </footer>
+</body>
+</html>

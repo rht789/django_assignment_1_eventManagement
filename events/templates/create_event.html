@@ -1,0 +1,12 @@
+<section class="p-8">
+    <h3 class="text-2xl font-bold">Create New Event</h3>
+    <div class="bg-white p-6 rounded-lg shadow-md mt-4">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}  <!-- Django will render the form dynamically -->
+            <button class="bg-teal-600 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-teal-700">
+                Create Event
+            </button>
+        </form>
+    </div>
+</section>
