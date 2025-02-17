@@ -9,8 +9,10 @@ def home(request):
 def create_event(request):
     event_form = EventForm()
     if request.method == 'POST':
-        event_form(request.POST)
-        if event_form.isvalid():
+        event_form=EventForm(request.POST)
+        if event_form.is_valid():
             event_form.save()
-        messages.success(request,"Event created Sucessfully")
-        redirect('create_')
+            messages.success(request,"Event created Sucessfully")
+            return redirect('create_event')
+    context = {"event_form": event_form}
+    return render(request, "create_event.html", context)

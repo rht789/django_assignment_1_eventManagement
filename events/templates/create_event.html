@@ -1,12 +1,54 @@
-<section class="p-8">
-    <h3 class="text-2xl font-bold">Create New Event</h3>
-    <div class="bg-white p-6 rounded-lg shadow-md mt-4">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}  <!-- Django will render the form dynamically -->
-            <button class="bg-teal-600 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-teal-700">
-                Create Event
-            </button>
-        </form>
-    </div>
-</section>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+        <h1 class="text-lg font-bold">Event Manager</h1>
+        <div>
+            <a href="" class="mx-3 text-gray-700">Home</a>
+            <a href="" class="mx-3 text-gray-700">Events</a>
+            <a href="" class="mx-3 text-gray-700">Dashboard</a>
+            <a href="" class="mx-3 text-gray-700">Create Event</a>
+        </div>
+    </nav>
+    
+    <!-- Create Event Form -->
+    <section class="p-8 max-w-3xl mx-auto">
+        <h3 class="text-2xl font-bold">Create New Event</h3>
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="px-2 py-1 {% if message.tags == 'success' %}bg-green-500{% endif %} ">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md mt-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    {{ event_form.as_p }}
+                </div>
+                <div class="text-center mt-4">
+                    <button class="bg-teal-600 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-teal-700">
+                        Create Event
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white text-center p-4 mt-8">
+        © 2025 Event Manager. All rights reserved.
+    </footer>
+</body>
+</html>
