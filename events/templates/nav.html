@@ -1,0 +1,24 @@
+{% load static %}
+
+<!-- index.html - Home Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Manager - Home</title>
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+        <h1 class="text-lg font-bold">Event Manager</h1>
+        <div>
+            <a href="{% url 'home' %}" class="mx-3 text-gray-700">Home</a>
+            <a href="{% url 'events' %}" class="mx-3 text-gray-700">Events</a>
+            <a href="{% url 'dashboard' %}" class="mx-3 text-gray-700">Dashboard</a>
+            <a href="{% url 'create_event' %}" class="mx-3 text-gray-700">Create Event</a>
+        </div>
+    </nav>
+</body>
+</html> 

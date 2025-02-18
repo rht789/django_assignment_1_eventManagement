@@ -8,18 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Manager - Home</title>
     <link rel="stylesheet" href="{% static "css/output.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-100">
     <!-- Navbar -->
-    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
-        <h1 class="text-lg font-bold">Event Manager</h1>
-        <div>
-            <a href="index.html" class="mx-3 text-gray-700">Home</a>
-            <a href="events.html" class="mx-3 text-gray-700">Events</a>
-            <a href="dashboard.html" class="mx-3 text-gray-700">Dashboard</a>
-            <a href="create.html" class="mx-3 text-gray-700">Create Event</a>
-        </div>
-    </nav>
+    {% include "nav.html" %}
     
     <!-- Hero Section -->
     <section class="bg-teal-600 text-white text-center py-16">
@@ -34,21 +27,32 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
             <div class="bg-white p-4 rounded-lg shadow-md">
                 <h4 class="font-bold">Tech Conference 2025</h4>
-                <p class="text-gray-600">📅 2025-06-15 | 📍 San Francisco, CA</p>
+                <p class="text-gray-600">
+                    <i class="fas fa-calendar-alt"></i> 2025-06-15 | 
+                    <i class="fas fa-map-marker-alt"></i> San Francisco, CA
+                </p>
                 <span class="text-teal-600 text-sm bg-gray-200 px-2 py-1 rounded-md">Technology</span>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md">
                 <h4 class="font-bold">Summer Music Festival</h4>
-                <p class="text-gray-600">📅 2025-07-20 | 📍 Austin, TX</p>
+                <p class="text-gray-600">
+                    <i class="fas fa-calendar-alt"></i> 2025-07-20 | 
+                    <i class="fas fa-map-marker-alt"></i> Austin, TX
+                </p>
                 <span class="text-teal-600 text-sm bg-gray-200 px-2 py-1 rounded-md">Music</span>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md">
                 <h4 class="font-bold">Global Business Summit</h4>
-                <p class="text-gray-600">📅 2025-09-10 | 📍 New York, NY</p>
+                <p class="text-gray-600">
+                    <i class="fas fa-calendar-alt"></i> 2025-09-10 | 
+                    <i class="fas fa-map-marker-alt"></i> New York, NY
+                </p>
                 <span class="text-teal-600 text-sm bg-gray-200 px-2 py-1 rounded-md">Business</span>
             </div>
         </div>
-        <a href="events.html" class="block text-center text-teal-600 mt-4">View All Events →</a>
+        <a href="events.html" class="block text-center text-teal-600 mt-4">
+            View All Events <i class="fas fa-arrow-right"></i>
+        </a>
     </section>
 
     <!-- Footer -->
