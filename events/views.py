@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from events.forms import EventForm
+from events.models import Event, Category
+from django.db.models import Q,Count
 
 # Create your views here.
 def home(request):
@@ -21,4 +23,19 @@ def dashboard(request):
     return render(request,"dashboard.html")
 
 def view_events(request):
-    return render(request,"events.html")
+    type = request.GET.get('type','All')
+    print(type)
+    base_query = Event.objects.prefetch_related('participant').annotate(participant_num=Count("participant"))
+    categories = Category.objects.all()
+    
+    category = categories.filter(name=type).first()
+    
+    if type == 'All':
+        events = base_query
+    else:
+        events = base_query.filter(category = category)
+    context = {
+        "events" : events,
+        "categories" : categories
+    }
+    return render(request,"events.html",context=context)
