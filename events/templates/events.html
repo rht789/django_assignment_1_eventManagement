@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Manager - Events</title>
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-100">
@@ -16,27 +16,42 @@
     <!-- Events Section -->
     <section class="p-8">
         <h3 class="text-2xl font-bold">All Events</h3>
-        <div class="flex justify-between items-center mt-4">
+
+        <!-- Category Filter Form -->
+        <form method="GET" action="{% url 'events' %}" class="flex justify-between items-center mt-4">
             <input type="text" placeholder="Search events or locations..." class="p-2 border rounded w-1/2">
-            <select class="p-2 border rounded">
-                <a href="{% url 'events' %}?type=All"><option>All</option></a>
+
+            <!-- Category Selection -->
+            <select name="type" class="p-2 border rounded" onchange="this.form.submit()">
+                <option value="All" {% if request.GET.type == "All" %}selected{% endif %}>All</option>
                 {% for category in categories %}
-                    <a href="{% url 'events' %}?type=category.name"><option>{{category.name}}</option></a>
+                    <option value="{{ category }}" {% if request.GET.type == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
                 {% endfor %}
             </select>
-        </div>
+        </form>
+
+        <!-- Event Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
             {% for event in events %}
                 <div class="bg-white p-4 rounded-lg shadow-md">
-                <h4 class="font-bold text-indigo-600">{{event.name}}</h4>
-                <p class="text-indigo-400"><i class="fas fa-calendar-alt"></i> {{event.date}}</p>
-                <p class="text-indigo-400"><i class="fa-solid fa-location-dot"></i> {{event.location}}</p>
-                <p class="text-indigo-400"><i class="fa-solid fa-users"></i> {{event.participant_num}}</p>
-                <span class="text-indigo-600 text-sm bg-gray-200 px-2 py-1 rounded-md">{{event.category}}</span>
-                <a href="#" class="block text-indigo-600 mt-2">View Details</a>
-            </div>
+                    <h4 class="font-bold text-indigo-600">{{ event.name }}</h4>
+                    <p class="text-indigo-500"><i class="fas fa-calendar-alt"></i> {{ event.date }}</p>
+                    <p class="text-indigo-500"><i class="fa-solid fa-location-dot"></i> {{ event.location }}</p>
+                    <p class="text-indigo-500"><i class="fa-solid fa-users"></i> {{ event.participant_num }}</p>
+                    <span class="text-indigo-600 text-sm bg-gray-200 px-2 py-1 rounded-md">{{ event.category.name }}</span>
+
+                    <!-- Improved View Details Button -->
+                    <a href="#" class="bg-indigo-600 text-white text-center 
+                        px-2 py-1 mt-2 rounded-md text-sm font-medium w-fit 
+                        hover:bg-indigo-700 transition duration-300">
+                        View Details
+                    </a>
+                </div>
+            {% empty %}
+                <p class="col-span-3 text-gray-500">No events found for this category.</p>
             {% endfor %}
-            
         </div>
     </section>
 

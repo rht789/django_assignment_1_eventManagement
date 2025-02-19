@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from django.contrib import messages
 from events.forms import EventForm
 from events.models import Event, Category
@@ -23,19 +22,17 @@ def dashboard(request):
     return render(request,"dashboard.html")
 
 def view_events(request):
-    type = request.GET.get('type','All')
-    print(type)
-    base_query = Event.objects.prefetch_related('participant').annotate(participant_num=Count("participant"))
-    categories = Category.objects.all()
-    
-    category = categories.filter(name=type).first()
-    
-    if type == 'All':
-        events = base_query
-    else:
-        events = base_query.filter(category = category)
+    type = request.GET.get('type', 'All')
+
+    events = (Event.objects.prefetch_related('participant').select_related('category').annotate(participant_num=Count("participant")))
+
+    if type != 'All':
+        events = events.filter(category__name=type)
+
+    categories = Event.objects.values_list('category__name', flat=True).distinct()
+
     context = {
-        "events" : events,
-        "categories" : categories
+        "events": events,
+        "categories": categories
     }
-    return render(request,"events.html",context=context)
+    return render(request, "events.html", context)
