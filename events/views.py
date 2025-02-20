@@ -86,3 +86,22 @@ def event_detail(request, id):
     }
     return render(request, 'event_detail.html', context)
 
+def update_event(request,id):
+    event = Event.objects.get(id=id)
+    event_form = EventForm(instance=event)
+    if request.method == 'POST':
+        event_form=EventForm(request.POST,instance=event)
+        if event_form.is_valid():
+            event_form.save()
+            messages.success(request,"Event Updated Sucessfully")
+            return redirect('event_detail',id)
+    context = {"event_form": event_form}
+    return render(request, "create_event.html", context)
+
+def delete_event(request,id):
+    if request.method == 'POST':    
+        event = Event.objects.get(id=id)
+        event.delete()
+        messages.success(request,"Event Deleted Sucessfully, showing next event detail")
+        return redirect('event_detail',id+1)
+    return render(request, "event_detail.html")

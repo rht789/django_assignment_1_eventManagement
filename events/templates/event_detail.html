@@ -12,6 +12,17 @@
   <!-- Navbar -->
   {% include "nav.html" %}
 
+        <div class="mt-6">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="px-4 py-2 text-white font-semibold rounded-lg flex justify-between items-center
+                                {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
   <section class="p-8">
     <div class="bg-white rounded-lg shadow-md p-6">
       <!-- Event Title -->
@@ -74,7 +85,7 @@
       <div class="mt-6 flex gap-3">
         <!-- Edit Button -->
         <a
-          href=""
+          href="{% url 'update_event' event.id %}"
           class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-md"
         >
           <i class="fas fa-edit mr-2"></i>
@@ -82,7 +93,7 @@
         </a>
 
         <!-- Delete Button -->
-        <form action="" method="POST"> <!-- use your actual delete view’s URL -->
+        <form action="{% url 'delete_event' event.id %}" method="POST"> 
           {% csrf_token %}
           <button
             type="submit"
