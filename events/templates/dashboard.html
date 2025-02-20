@@ -20,80 +20,69 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
-                <i class="fa-solid fa-users text-teal-600 text-3xl mr-3"></i>
+                <i class="fa-solid fa-users text-indigo-600 text-3xl mr-3"></i>
                 <div>
                     <p class="text-gray-600">Total Participants</p>
-                    <p class="text-xl font-bold">10,000</p>
+                    <p class="text-xl font-bold">{{counts.total_participants}}</p>
                 </div>
             </div>
+            <a href="{% url 'dashboard' %}?type=all">
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
-                <i class="fa-solid fa-calendar text-teal-600 text-3xl mr-3"></i>
+                <i class="fa-solid fa-calendar text-indigo-600 text-3xl mr-3"></i>
+                
                 <div>
                     <p class="text-gray-600">Total Events</p>
-                    <p class="text-xl font-bold">50</p>
+                    <p class="text-xl font-bold">{{counts.total_events}}</p>
                 </div>
             </div>
+            </a>
+            <a href="{% url 'dashboard' %}?type=upcoming">
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
-                <i class="fa-solid fa-chart-line text-teal-600 text-3xl mr-3"></i>
-                <div>
+                <i class="fa-solid fa-chart-line text-indigo-600 text-3xl mr-3"></i>
+                
+                    <div>
                     <p class="text-gray-600">Upcoming Events</p>
-                    <p class="text-xl font-bold">20</p>
+                    <p class="text-xl font-bold">{{counts.upcoming_events}}</p>
                 </div>
             </div>
+        </a>
+            <a href="{% url 'dashboard' %}?type=past">
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
-                <i class="fa-solid fa-clock text-teal-600 text-3xl mr-3"></i>
-                <div>
+                <i class="fa-solid fa-clock text-indigo-600 text-3xl mr-3"></i>
+                
+                    <div>
                     <p class="text-gray-600">Past Events</p>
-                    <p class="text-xl font-bold">30</p>
+                    <p class="text-xl font-bold">{{counts.past_events}}</p>
                 </div>
             </div>
+            </a>
         </div>
         
         <!-- Events by Category -->
         <div class="bg-white p-6 rounded-lg shadow-md mt-6">
             <h4 class="text-lg font-bold">Events by Category</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Technology</h5>
-                    <p class="text-xl font-bold">12 Events</p>
+                {% for category in categories %}
+                    <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <h5 class="text-md font-bold">{{category.category__name}}</h5>
+                    <p class="text-xl font-bold">{{category.event_count}}</p>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Music</h5>
-                    <p class="text-xl font-bold">8 Events</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Business</h5>
-                    <p class="text-xl font-bold">10 Events</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Art</h5>
-                    <p class="text-xl font-bold">7 Events</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Culinary</h5>
-                    <p class="text-xl font-bold">5 Events</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg text-center">
-                    <h5 class="text-md font-bold">Sports</h5>
-                    <p class="text-xl font-bold">9 Events</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
         
         <!-- Today's Events -->
         <div class="bg-white p-4 rounded-lg shadow-md mt-6">
             <h4 class="text-lg font-bold">Today's Events</h4>
-            <ul class="mt-2">
-                <li class="py-2 border-b"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Morning Yoga - 08:00 AM</li>
-                <li class="py-2 border-b"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Tech Meetup - 02:00 PM</li>
-                <li class="py-2"><i class="fa-solid fa-clock text-teal-600 mr-2"></i> Evening Concert - 07:00 PM</li>
-            </ul>
+            {% for event in event_today %}
+                <ul class="mt-2">
+                    <li class="py-2 border-b"><i class="fa-solid fa-clock text-indigo-600 mr-2"></i> {{event.name}} - {{event.time}}</li> 
+                </ul>
+            {% endfor %}
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white text-center p-4 mt-8">
-        © 2025 Event Manager. All rights reserved.
-    </footer>
+    {% include "footer.html" %}
 </body>
 </html>

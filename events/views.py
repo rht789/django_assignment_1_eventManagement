@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from events.forms import EventForm
-from events.models import Event, Category
+from events.models import Event, Category, Participant
 from django.db.models import Q,Count
 from django.utils.dateparse import parse_date
 from django.utils import timezone
@@ -30,7 +30,34 @@ def create_event(request):
     return render(request, "create_event.html", context)
 
 def dashboard(request):
-    return render(request,"dashboard.html")
+    type = request.GET.get('type','all')
+    base_query = Event.objects.select_related('category').prefetch_related('participant')
+    
+    counts = base_query.aggregate(
+        total_participants = Count('participant', distinct=True),
+        total_events = Count('id', distinct=True),
+        upcoming_events = Count('id', filter=Q(date__gt=timezone.now()),distinct=True),
+        past_events = Count('id', filter=Q(date__lt=timezone.now()),distinct=True)
+    )
+    if type == 'upcoming':
+        events = base_query.filter(date__gt=timezone.now())
+    elif type == 'past':
+        events = base_query.filter(date__lt=timezone.now())
+    else:
+        events = base_query
+    categories = (
+        events
+        .values('category__name')
+        .annotate(event_count=Count('id', distinct=True))
+        .order_by('category__name')
+    )
+    event_today = base_query.filter(date=timezone.now())
+    context = {
+        "counts" : counts,
+        "categories" : categories,
+        "event_today" : event_today
+    }
+    return render(request,"dashboard.html", context=context)
 
 def view_events(request):
     type = request.GET.get('type', 'All')
@@ -68,9 +95,6 @@ def view_events(request):
     }
     return render(request, "events.html", context)
 
-from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
 
 def event_detail(request, id):
     event = (
