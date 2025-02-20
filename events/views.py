@@ -18,6 +18,7 @@ def home(request):
         "upcoming_events": upcoming_events,
     }
     return render(request, "home.html", context)
+
 def create_event(request):
     event_form = EventForm()
     if request.method == 'POST':
@@ -94,7 +95,6 @@ def view_events(request):
         "categories": categories
     }
     return render(request, "events.html", context)
-
 
 def event_detail(request, id):
     event = (

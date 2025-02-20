@@ -1,5 +1,5 @@
 from django import forms
-from events.models import Event, Participant
+from events.models import Event
 
 class StyledFormMixin:
     """Mixin to apply Tailwind CSS styles to form fields."""

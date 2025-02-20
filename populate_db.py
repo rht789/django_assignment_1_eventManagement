@@ -2,29 +2,27 @@ import os
 import django
 from faker import Faker
 import random
-from events.models import Category, Participant, Event  # Replace 'your_app' with your actual app name
+from events.models import Category, Participant, Event
 
 # Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'event_management.settings')  # Replace 'your_project' with your actual project name
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'event_management.settings')
 django.setup()
 
-# Function to populate the database
 def populate_db():
-    # Initialize Faker
     fake = Faker()
 
     # Create Categories
     categories = [Category.objects.create(
         name=fake.word().capitalize(),
         description=fake.text()
-    ) for _ in range(1)]
+    ) for _ in range(7)]
     print(f"Created {len(categories)} categories.")
 
     # Create Participants
     participants = [Participant.objects.create(
         name=fake.name(),
         email=fake.unique.email()
-    ) for _ in range(5)]
+    ) for _ in range(15)]
     print(f"Created {len(participants)} participants.")
 
     # Create Events
@@ -44,5 +42,4 @@ def populate_db():
 
     print("Database populated successfully!")
 
-# Run the function
 populate_db()
