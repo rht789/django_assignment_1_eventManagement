@@ -17,14 +17,14 @@ def populate_db():
     categories = [Category.objects.create(
         name=fake.word().capitalize(),
         description=fake.text()
-    ) for _ in range(6)]
+    ) for _ in range(1)]
     print(f"Created {len(categories)} categories.")
 
     # Create Participants
     participants = [Participant.objects.create(
         name=fake.name(),
         email=fake.unique.email()
-    ) for _ in range(10)]
+    ) for _ in range(5)]
     print(f"Created {len(participants)} participants.")
 
     # Create Events
@@ -33,7 +33,7 @@ def populate_db():
         event = Event.objects.create(
             name=fake.sentence(nb_words=3).replace('.', ''),
             description=fake.paragraph(),
-            date=fake.date_between(start_date="-30d", end_date="+30d"),
+            date=fake.date_between(start_date="+30d", end_date="+90d"),
             time=fake.time(),
             location=fake.city(),
             category=random.choice(categories)

@@ -3,10 +3,21 @@ from django.contrib import messages
 from events.forms import EventForm
 from events.models import Event, Category
 from django.db.models import Q,Count
+from django.utils.dateparse import parse_date
+from django.utils import timezone
 
-# Create your views here.
 def home(request):
-    return render(request,"home.html")
+    upcoming_events = (
+        Event.objects.prefetch_related('participant')
+        .select_related('category')
+        .filter(date__gte=timezone.now())
+        .order_by('date')
+        .annotate(participant_num=Count("participant"))
+    ).order_by('?')[:6]
+    context = {
+        "upcoming_events": upcoming_events,
+    }
+    return render(request, "home.html", context)
 def create_event(request):
     event_form = EventForm()
     if request.method == 'POST':
@@ -23,11 +34,31 @@ def dashboard(request):
 
 def view_events(request):
     type = request.GET.get('type', 'All')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
 
-    events = (Event.objects.prefetch_related('participant').select_related('category').annotate(participant_num=Count("participant")))
+    events = (
+        Event.objects.prefetch_related('participant')
+        .select_related('category')
+        .annotate(participant_num=Count("participant"))
+    )
+    
+    search = request.GET.get('search', '')
+
+    if search:
+        events = events.filter(
+            Q(name__icontains=search) |
+            Q(location__icontains=search)
+        )
 
     if type != 'All':
         events = events.filter(category__name=type)
+
+    if start_date and end_date:
+        start_date = parse_date(start_date) 
+        end_date = parse_date(end_date)
+        if start_date and end_date:
+            events = events.filter(date__range=[start_date, end_date])
 
     categories = Event.objects.values_list('category__name', flat=True).distinct()
 
@@ -36,3 +67,22 @@ def view_events(request):
         "categories": categories
     }
     return render(request, "events.html", context)
+
+from django.db.models import Count
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+
+def event_detail(request, id):
+    event = (
+        Event.objects
+        .prefetch_related('participant')
+        .select_related('category')
+        .annotate(participant_num=Count("participant"))
+        .get(id=id)
+    )
+
+    context = {
+        'event': event
+    }
+    return render(request, 'event_detail.html', context)
+
