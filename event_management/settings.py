@@ -84,9 +84,10 @@ WSGI_APPLICATION = "event_management.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(   
-        default='postgresql://event_management_db_zl4g_user:DpKUUlrJKvjK72t9zEPPcu6IenAZuIJh@dpg-curkt2rv2p9s73ak5vgg-a.oregon-postgres.render.com/event_management_db_zl4g',       
+        default='postgresql://event_igqy_user:fttQNT0qynYx0NXxOlLTtib6P3PyphMf@dpg-cvbfi4ij1k6c73969peg-a.oregon-postgres.render.com/event_igqy',       
         conn_max_age=600    
         )}
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
